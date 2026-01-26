@@ -164,7 +164,8 @@ export async function POST(req: NextRequest) {
     }
     */
 
-    // 3. Opcionalmente processar URLs web padrão
+    // 3. Opcionalmente processar URLs web padrão (DESATIVADO - Apenas URLs enviadas)
+    /*
     if (includeWebUrls) {
       for (const url of WEB_URLS) {
         try {
@@ -176,6 +177,7 @@ export async function POST(req: NextRequest) {
         }
       }
     }
+    */
 
     if (allChunks.length === 0) {
       return NextResponse.json({
@@ -199,66 +201,48 @@ export async function POST(req: NextRequest) {
     // Monta prompt
     const prompt = `Você é um assistente RAG para documentos da Expocaccer. Responda à pergunta do usuário com base nos trechos abaixo de forma clara e objetiva.\n\nPergunta: ${question}\n\nTrechos dos documentos:\n${context}\n\nResposta:`;
 
-    // Valida chave Gemini
-    if (!GEMINI_API_KEY) {
-      return NextResponse.json({ error: "Chave Gemini não configurada corretamente." }, { status: 500 });
+    // Valida chave OpenAI
+    if (!OPENAI_API_KEY) {
+      return NextResponse.json({ error: "Chave OpenAI não configurada corretamente. Adicione OPENAI_API_KEY no .env.local" }, { status: 500 });
     }
 
     let answer = "";
-    const maxRetries = 3;
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        console.log(`Tentativa ${attempt} de usar Gemini...`);
-        const geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: prompt }]
-            }]
-          })
-        });
+    try {
+      console.log("Consultando OpenAI...");
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "user", content: prompt }
+          ],
+          temperature: 0.3
+        })
+      });
 
-        if (!geminiRes.ok) {
-          const geminiError = await geminiRes.json() as any;
-          const errorMessage = geminiError.error?.message || geminiRes.statusText;
-
-          // Se for erro de quota/limite (429), espera e tenta de novo
-          if (geminiRes.status === 429 || errorMessage.toLowerCase().includes("quota") || errorMessage.toLowerCase().includes("rate limit")) {
-            console.warn(`Limite de taxa atingido na tentativa ${attempt}. Esperando...`);
-            if (attempt === maxRetries) throw new Error(`Gemini Error (Quota Exceeded): ${errorMessage}`);
-
-            // Espera exponencial: 5s, 10s, 20s...
-            const waitTime = 5000 * Math.pow(2, attempt - 1);
-            await new Promise(resolve => setTimeout(resolve, waitTime));
-            continue;
-          }
-
-          throw new Error(`Gemini Error: ${errorMessage}`);
-        }
-
-        const geminiData = await geminiRes.json() as any;
-        answer = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
-
-        if (!answer) {
-          throw new Error("Gemini retornou resposta vazia.");
-        }
-
-        // Se deu certo, sai do loop
-        break;
-
-      } catch (geminiError) {
-        console.error(`Erro no Gemini (Tentativa ${attempt}):`, geminiError);
-        if (attempt === maxRetries) {
-          return NextResponse.json({
-            error: "Erro ao consultar Gemini após várias tentativas.",
-            details: geminiError instanceof Error ? geminiError.message : String(geminiError)
-          }, { status: 500 });
-        }
+      if (!response.ok) {
+        const errorData = await response.json() as any;
+        throw new Error(`OpenAI Error: ${errorData.error?.message || response.statusText}`);
       }
+
+      const data = await response.json() as any;
+      answer = data.choices?.[0]?.message?.content;
+
+      if (!answer) {
+        throw new Error("OpenAI retornou resposta vazia.");
+      }
+
+    } catch (apiError) {
+      console.error("Erro na OpenAI:", apiError);
+      return NextResponse.json({
+        error: "Erro ao consultar OpenAI.",
+        details: apiError instanceof Error ? apiError.message : String(apiError)
+      }, { status: 500 });
     }
 
     return NextResponse.json({ answer });
