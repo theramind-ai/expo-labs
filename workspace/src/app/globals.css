@@ -17,7 +17,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0f172a 0%, #312e81 50%, #1e293b 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #262626 50%, #1a1a1a 100%);
   min-height: 100vh;
 }
 
@@ -70,7 +70,7 @@ main {
 /* Input e Textarea focus styles */
 input:focus,
 textarea:focus {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
 }
 
 /* Scrollbar estilizado */
@@ -83,12 +83,12 @@ textarea:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.5);
+  background: rgba(255, 204, 0, 0.5);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.8);
+  background: rgba(255, 204, 0, 0.8);
 }
 
 /* Placeholder styling */
@@ -99,8 +99,8 @@ textarea::placeholder {
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(168, 85, 247, 0.3);
-  color: #e9d5ff;
+  background-color: rgba(255, 204, 0, 0.3);
+  color: #ffffff;
 }
 
 /* Responsive typography */

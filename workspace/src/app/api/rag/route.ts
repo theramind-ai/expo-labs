@@ -11,12 +11,9 @@ const DOCUMENTS_DIR = path.join(process.cwd(), "public", "documents");
 
 // URLs de páginas web para complementar o RAG (opcional)
 const WEB_URLS = [
-  "https://expocaccer.com.br/",
-  "https://expocaccer.com.br/cooperativa-de-cafe-disponibiliza-cartilha-de-safra-para-os-produtores-do-cerrado-mineiro/",
-  "https://expocaccer.com.br/expocaccer-disponibiliza-cartilha-de-safra-para-os-cafeicultores/",
-  "https://expocaccer.com.br/expocaccer-lanca-tutorial-para-acesso-ao-portal-do-cooperado/",
-  "https://expocaccer.com.br/expocaccer-revela-avancos-em-sustentabilidade-em-relatorio-de-2022/",
-  "https://dulcerrado.com.br/"
+  "https://www.gruposetta.com/",
+  "https://www.gruposetta.com/servicos",
+  "https://www.gruposetta.com/digital-labs"
 ];
 
 // Função para extrair texto de PDF local
@@ -199,7 +196,7 @@ export async function POST(req: NextRequest) {
     const context = relevant.map((chunk, i) => `Trecho ${i + 1}: ${chunk}`).join("\n\n");
 
     // Monta prompt
-    const prompt = `Você é um assistente RAG para documentos da Expocaccer. Responda à pergunta do usuário com base nos trechos abaixo de forma clara e objetiva.\n\nPergunta: ${question}\n\nTrechos dos documentos:\n${context}\n\nResposta:`;
+    const prompt = `Você é um assistente RAG especializado no Grupo Setta. Sua função é responder perguntas sobre engenharia elétrica, automação industrial, subestações, eletrocentros e as soluções inovadoras da Digital Labs do grupo. Responda de forma profissional, clara e objetiva com base nos trechos fornecidos.\n\nPergunta: ${question}\n\nTrechos dos documentos:\n${context}\n\nResposta:`;
 
     let answer = "";
 

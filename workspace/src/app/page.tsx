@@ -56,10 +56,10 @@ export default function Home() {
       }}>
         <div style={{ maxWidth: "900px", margin: "0 auto" }}>
           <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#000000", margin: 0 }}>
-            RAG - Expocaccer
+            RAG - Grupo Setta
           </h1>
           <p style={{ fontSize: "14px", color: "#666666", margin: "4px 0 0 0" }}>
-            Consulte documentos com inteligência artificial
+            Inteligência Artificial para Soluções em Energia e Automação
           </p>
         </div>
       </div>
@@ -78,10 +78,10 @@ export default function Home() {
           }}>
             <div style={{ fontSize: "48px", marginBottom: "16px" }}>💬</div>
             <h2 style={{ fontSize: "28px", fontWeight: "600", color: "#000000", marginBottom: "8px" }}>
-              Bem-vindo ao RAG
+              Bem-vindo ao Assistente Setta
             </h2>
             <p style={{ fontSize: "16px", color: "#666666", marginBottom: "32px" }}>
-              Faça uma pergunta sobre os documentos da Expocaccer
+              Faça uma pergunta sobre as soluções da Grupo Setta
             </p>
 
             {/* Perguntas Sugeridas */}
@@ -93,12 +93,11 @@ export default function Home() {
               marginBottom: "32px"
             }}>
               {[
-                "Qual é o procedimento para registrar o café na Expocaccer?",
-                "Quais são os documentos necessários para participar da safra?",
-                "Como funciona o processo de certificação de qualidade?",
-                "Quais são os prazos para inscrição e participação?",
-                "Como funciona o Clube de Assinatura Dulcerrado?",
-                "Como entrar em contato com a Expocaccer para informações adicionais?"
+                "O que é o Grupo Setta e qual seu propósito?",
+                "Quais são as principais soluções da Digital Labs?",
+                "Como as subestações móveis da Setta auxiliam em projetos de energia?",
+                "Quais produtos de segurança e flexibilidade a Setta oferece?",
+                "Como entrar em contato com a equipe da Setta para novos projetos?"
               ].map((pergunta, i) => (
                 <button
                   key={i}
@@ -123,7 +122,7 @@ export default function Home() {
                   }}
                   onMouseEnter={e => {
                     (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e5e7eb";
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#10a37f";
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#ffcc00";
                   }}
                   onMouseLeave={e => {
                     (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#f3f4f6";
@@ -198,8 +197,8 @@ export default function Home() {
                   maxWidth: "600px",
                   padding: "12px 16px",
                   borderRadius: "12px",
-                  backgroundColor: msg.type === "user" ? "#10a37f" : "#f7f7f7",
-                  color: msg.type === "user" ? "#ffffff" : "#000000",
+                  backgroundColor: msg.type === "user" ? "#ffcc00" : "#f7f7f7",
+                  color: msg.type === "user" ? "#000000" : "#000000",
                   fontSize: "15px",
                   lineHeight: "1.5",
                   whiteSpace: "pre-wrap",
@@ -286,7 +285,7 @@ export default function Home() {
               disabled={loading || !question.trim()}
               style={{
                 padding: "12px 24px",
-                backgroundColor: loading || !question.trim() ? "#cccccc" : "#10a37f",
+                backgroundColor: loading || !question.trim() ? "#cccccc" : "#ffcc00",
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "8px",
@@ -297,12 +296,12 @@ export default function Home() {
               }}
               onMouseEnter={e => {
                 if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#0a8860";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e6b800";
                 }
               }}
               onMouseLeave={e => {
                 if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#10a37f";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#ffcc00";
                 }
               }}
             >
@@ -358,8 +357,8 @@ export default function Home() {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         input:focus, textarea:focus {
-          border-color: #10a37f !important;
-          box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+          border-color: #ffcc00 !important;
+          box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
         }
       `}</style>
     </div>
