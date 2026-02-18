@@ -54,13 +54,20 @@ export default function Home() {
         padding: "16px 20px",
         backgroundColor: "#ffffff"
       }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-          <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#000000", margin: 0 }}>
-            RAG - Grupo Setta
-          </h1>
-          <p style={{ fontSize: "14px", color: "#666666", margin: "4px 0 0 0" }}>
-            Inteligência Artificial para Soluções em Energia e Automação
-          </p>
+        <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", alignItems: "center", gap: "16px" }}>
+          <img
+            src="/logo-setta.svg"
+            alt="Grupo Setta Logo"
+            style={{ height: "40px", borderRadius: "4px" }}
+          />
+          <div>
+            <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#000000", margin: 0 }}>
+              RAG - Grupo Setta
+            </h1>
+            <p style={{ fontSize: "14px", color: "#666666", margin: "4px 0 0 0" }}>
+              Inteligência Artificial para Soluções em Energia e Automação
+            </p>
+          </div>
         </div>
       </div>
 

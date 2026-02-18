@@ -1,0 +1,11 @@
+<svg width="120" height="40" viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" fill="#ffcc00" rx="4" />
+  <!-- "Se" -->
+  <text x="12" y="30" font-family="Verdana, Geneva, sans-serif" font-weight="bold" font-size="22" fill="#333333" style="font-style: italic;">Se</text>
+  <!-- First 't' with arrow -->
+  <path d="M48 30 L48 18 L44 18 L51 8 L58 18 L54 18 L54 30 Z" fill="#333333" />
+  <!-- Second 't' with arrow -->
+  <path d="M62 30 L62 18 L58 18 L65 8 L72 18 L68 18 L68 30 Z" fill="#333333" />
+  <!-- "a" -->
+  <text x="75" y="30" font-family="Verdana, Geneva, sans-serif" font-weight="bold" font-size="22" fill="#333333" style="font-style: italic;">a</text>
+</svg>
