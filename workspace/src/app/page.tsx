@@ -50,22 +50,22 @@ export default function Home() {
     <div style={{ display: "flex", height: "100vh", flexDirection: "column", backgroundColor: "#ffffff" }}>
       {/* Header */}
       <div style={{
-        borderBottom: "1px solid #e5e7eb",
+        borderBottom: "1px solid #d4e4d4",
         padding: "16px 20px",
         backgroundColor: "#ffffff"
       }}>
         <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", alignItems: "center", gap: "16px" }}>
           <img
-            src="/logo-setta.svg"
-            alt="Grupo Setta Logo"
+            src="/logo-floema.svg"
+            alt="Floema Logo"
             style={{ height: "40px", borderRadius: "4px" }}
           />
           <div>
-            <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#000000", margin: 0 }}>
-              RAG - Grupo Setta
+            <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#2d5016", margin: 0 }}>
+              RAG - Floema
             </h1>
-            <p style={{ fontSize: "14px", color: "#666666", margin: "4px 0 0 0" }}>
-              Inteligência Artificial para Soluções em Energia e Automação
+            <p style={{ fontSize: "14px", color: "#4a7c2e", margin: "4px 0 0 0" }}>
+              Inteligência Artificial para Soluções Agrícolas e Fertilizantes
             </p>
           </div>
         </div>
@@ -84,11 +84,11 @@ export default function Home() {
             padding: "20px"
           }}>
             <div style={{ fontSize: "48px", marginBottom: "16px" }}>💬</div>
-            <h2 style={{ fontSize: "28px", fontWeight: "600", color: "#000000", marginBottom: "8px" }}>
-              Bem-vindo ao Assistente Setta
+            <h2 style={{ fontSize: "28px", fontWeight: "600", color: "#2d5016", marginBottom: "8px" }}>
+              Bem-vindo ao Assistente Floema
             </h2>
-            <p style={{ fontSize: "16px", color: "#666666", marginBottom: "32px" }}>
-              Faça uma pergunta sobre as soluções da Grupo Setta
+            <p style={{ fontSize: "16px", color: "#4a7c2e", marginBottom: "32px" }}>
+              Faça uma pergunta sobre as soluções da Floema em fertilizantes e nutrição vegetal
             </p>
 
             {/* Perguntas Sugeridas */}
@@ -100,11 +100,11 @@ export default function Home() {
               marginBottom: "32px"
             }}>
               {[
-                "O que é o Grupo Setta e qual seu propósito?",
-                "Quais são as principais soluções da Digital Labs?",
-                "Como as subestações móveis da Setta auxiliam em projetos de energia?",
-                "Quais produtos de segurança e flexibilidade a Setta oferece?",
-                "Como entrar em contato com a equipe da Setta para novos projetos?"
+                "O que é a Floema e qual seu propósito na agricultura?",
+                "Quais são as principais linhas de fertilizantes da Floema?",
+                "Como os fertilizantes foliares da Floema melhoram a produtividade?",
+                "Quais soluções orgânicas e minerais a Floema oferece?",
+                "Como entrar em contato com a equipe da Floema para assistência técnica?"
               ].map((pergunta, i) => (
                 <button
                   key={i}
@@ -117,23 +117,23 @@ export default function Home() {
                   }}
                   style={{
                     padding: "12px 16px",
-                    backgroundColor: "#f3f4f6",
-                    border: "1px solid #e5e7eb",
+                    backgroundColor: "#f0f7e8",
+                    border: "1px solid #d4e4d4",
                     borderRadius: "8px",
                     fontSize: "14px",
-                    color: "#374151",
+                    color: "#2d5016",
                     cursor: "pointer",
                     transition: "all 0.2s",
                     textAlign: "left",
                     fontFamily: "inherit"
                   }}
                   onMouseEnter={e => {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e5e7eb";
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#ffcc00";
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e8f5d9";
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#4a7c2e";
                   }}
                   onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#f3f4f6";
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#e5e7eb";
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#f0f7e8";
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#d4e4d4";
                   }}
                 >
                   {pergunta}
@@ -150,40 +150,40 @@ export default function Home() {
             }}>
               <div style={{
                 padding: "12px 16px",
-                backgroundColor: "#f3f4f6",
+                backgroundColor: "#f0f7e8",
                 borderRadius: "8px",
                 fontSize: "13px",
-                color: "#374151",
+                color: "#2d5016",
                 fontWeight: "500"
               }}>
                 📚 Busca em documentos
               </div>
               <div style={{
                 padding: "12px 16px",
-                backgroundColor: "#f3f4f6",
+                backgroundColor: "#f0f7e8",
                 borderRadius: "8px",
                 fontSize: "13px",
-                color: "#374151",
+                color: "#2d5016",
                 fontWeight: "500"
               }}>
                 ⚡ Respostas rápidas
               </div>
               <div style={{
                 padding: "12px 16px",
-                backgroundColor: "#f3f4f6",
+                backgroundColor: "#f0f7e8",
                 borderRadius: "8px",
                 fontSize: "13px",
-                color: "#374151",
+                color: "#2d5016",
                 fontWeight: "500"
               }}>
                 📍 Cita fontes
               </div>
               <div style={{
                 padding: "12px 16px",
-                backgroundColor: "#f3f4f6",
+                backgroundColor: "#f0f7e8",
                 borderRadius: "8px",
                 fontSize: "13px",
-                color: "#374151",
+                color: "#2d5016",
                 fontWeight: "500"
               }}>
                 🤖 IA avançada
@@ -204,8 +204,8 @@ export default function Home() {
                   maxWidth: "600px",
                   padding: "12px 16px",
                   borderRadius: "12px",
-                  backgroundColor: msg.type === "user" ? "#ffcc00" : "#f7f7f7",
-                  color: msg.type === "user" ? "#000000" : "#000000",
+                  backgroundColor: msg.type === "user" ? "#4a7c2e" : "#f0f7e8",
+                  color: msg.type === "user" ? "#ffffff" : "#2d5016",
                   fontSize: "15px",
                   lineHeight: "1.5",
                   whiteSpace: "pre-wrap",
@@ -264,7 +264,7 @@ export default function Home() {
 
       {/* Input Area */}
       <div style={{
-        borderTop: "1px solid #e5e7eb",
+        borderTop: "1px solid #d4e4d4",
         padding: "16px 20px",
         backgroundColor: "#ffffff"
       }}>
@@ -279,12 +279,12 @@ export default function Home() {
               style={{
                 flex: 1,
                 padding: "12px 16px",
-                border: "1px solid #e5e7eb",
+                border: "1px solid #d4e4d4",
                 borderRadius: "8px",
                 fontSize: "15px",
                 outline: "none",
-                backgroundColor: loading ? "#f3f4f6" : "#ffffff",
-                color: "#000000"
+                backgroundColor: loading ? "#f0f7e8" : "#ffffff",
+                color: "#2d5016"
               }}
             />
             <button
@@ -292,7 +292,7 @@ export default function Home() {
               disabled={loading || !question.trim()}
               style={{
                 padding: "12px 24px",
-                backgroundColor: loading || !question.trim() ? "#cccccc" : "#ffcc00",
+                backgroundColor: loading || !question.trim() ? "#cccccc" : "#4a7c2e",
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "8px",
@@ -303,12 +303,12 @@ export default function Home() {
               }}
               onMouseEnter={e => {
                 if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e6b800";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#3d6324";
                 }
               }}
               onMouseLeave={e => {
                 if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#ffcc00";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#4a7c2e";
                 }
               }}
             >
@@ -322,7 +322,7 @@ export default function Home() {
               display: "block",
               fontSize: "12px",
               fontWeight: "600",
-              color: "#666666",
+              color: "#4a7c2e",
               marginBottom: "6px",
               textTransform: "uppercase"
             }}>
@@ -335,14 +335,14 @@ export default function Home() {
               style={{
                 width: "100%",
                 padding: "12px 16px",
-                border: "1px solid #e5e7eb",
+                border: "1px solid #d4e4d4",
                 borderRadius: "8px",
                 fontSize: "13px",
                 fontFamily: "monospace",
                 minHeight: "60px",
                 resize: "vertical",
                 outline: "none",
-                color: "#000000",
+                color: "#2d5016",
                 backgroundColor: "#ffffff"
               }}
             />
@@ -364,8 +364,8 @@ export default function Home() {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         input:focus, textarea:focus {
-          border-color: #ffcc00 !important;
-          box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+          border-color: #4a7c2e !important;
+          box-shadow: 0 0 0 3px rgba(74, 124, 46, 0.1);
         }
       `}</style>
     </div>

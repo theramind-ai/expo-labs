@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RAG - Grupo Setta",
-  description: "Assistente RAG para consulta de informações e documentos do Grupo Setta.",
+  title: "RAG - Floema",
+  description: "Assistente RAG para consulta de informações e documentos da Floema - Soluções em Fertilizantes e Nutrição Vegetal.",
 };
 
 export default function RootLayout({
