@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RAG - Floema",
-  description: "Assistente RAG para consulta de informações e documentos da Floema - Soluções em Fertilizantes e Nutrição Vegetal.",
+  title: "CerradoHub",
+  description: "CerradoHub - Soluções inteligentes de Engenharia e Gestão Ambiental, Cursos e Inovação.",
 };
 
 export default function RootLayout({

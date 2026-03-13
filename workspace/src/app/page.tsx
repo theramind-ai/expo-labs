@@ -1,373 +1,236 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+
+import React from "react";
+import LucasChatbot from "../components/LucasChatbot";
 
 export default function Home() {
-  const [question, setQuestion] = useState("");
-  const [urls, setUrls] = useState("");
-  const [messages, setMessages] = useState<{ type: "user" | "assistant"; content: string }[]>([]);
-  const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const links = [
+    {
+      title: "Cerrado Cursos",
+      desc: "Nossa plataforma gamificada de ensino.",
+      url: "https://cerradocursos.com/",
+      color: "#27753f",
+    },
+    {
+      title: "O Desafio da Gestão",
+      desc: "Modernize o aprendizado e otimize o trabalho docente.",
+      url: "https://cerradocursos.com/#card-97llmllwg67bfqu",
+      color: "#01cb72",
+    },
+    {
+      title: "Nossas Soluções",
+      desc: "Conheça todas as nossas soluções educacionais.",
+      url: "https://cerradocursos.com/#card-4a1tyastlzr3j4n",
+      color: "#27753f",
+    },
+    {
+      title: "Cerrado Engenharia",
+      desc: "Soluções inteligentes de engenharia e gestão ambiental.",
+      url: "https://cerradoeng.com/",
+      color: "#04004f",
+    },
+    {
+      title: "Rodrigo Machado Consultoria",
+      desc: "Especialista em estudos ambientais e projetos técnicos.",
+      url: "https://rodrigo-machado.com/",
+      color: "#304254",
+    },
+  ];
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!question.trim()) return;
-
-    setLoading(true);
-    setMessages(prev => [...prev, { type: "user", content: question }]);
-    setQuestion("");
-
-    try {
-      const res = await fetch("/api/rag", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question,
-          customUrls: urls.split("\n").map(u => u.trim()).filter(Boolean)
-        })
-      });
-      const data = await res.json();
-
-      if (data.error) {
-        setMessages(prev => [...prev, { type: "assistant", content: `Erro: ${data.error}` }]);
-      } else {
-        setMessages(prev => [...prev, { type: "assistant", content: data.answer }]);
-      }
-    } catch (err) {
-      setMessages(prev => [...prev, { type: "assistant", content: "Erro ao conectar ao servidor. Tente novamente." }]);
-    }
-    setLoading(false);
-  };
+  const apps = [
+    { name: "História Primeira República", url: "https://cerradoeng.com/games-hist-primeira-republica" },
+    { name: "Gestão Ambiental", url: "https://cerradoeng.com/gestaoambiental" },
+    { name: "Códon", url: "https://cerradoeng.com/codon" },
+    { name: "Divisão Celular", url: "https://cerradoeng.com/divisaocelular" },
+  ];
 
   return (
-    <div style={{ display: "flex", height: "100vh", flexDirection: "column", backgroundColor: "#ffffff" }}>
-      {/* Header */}
-      <div style={{
-        borderBottom: "1px solid #d4e4d4",
-        padding: "16px 20px",
-        backgroundColor: "#ffffff"
-      }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto", display: "flex", alignItems: "center", gap: "16px" }}>
-          <img
-            src="/logo-floema.svg"
-            alt="Floema Logo"
-            style={{ height: "40px", borderRadius: "4px" }}
-          />
-          <div>
-            <h1 style={{ fontSize: "20px", fontWeight: "600", color: "#2d5016", margin: 0 }}>
-              RAG - Floema
-            </h1>
-            <p style={{ fontSize: "14px", color: "#4a7c2e", margin: "4px 0 0 0" }}>
-              Inteligência Artificial para Soluções Agrícolas e Fertilizantes
-            </p>
-          </div>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f8fafc", fontFamily: "system-ui, sans-serif" }}>
+      {/* Header / Hero */}
+      <header
+        style={{
+          background: "linear-gradient(135deg, #04004f 0%, #27753f 100%)",
+          color: "white",
+          padding: "80px 20px",
+          textAlign: "center",
+          borderRadius: "0 0 40px 40px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+        }}
+      >
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h1 style={{ fontSize: "56px", fontWeight: "800", marginBottom: "20px", letterSpacing: "-1px" }}>
+            CerradoHub
+          </h1>
+          <p style={{ fontSize: "20px", opacity: 0.9, lineHeight: "1.6", fontWeight: "300" }}>
+            Sua referência em <strong>Inovação Educacional</strong> e <strong>Gestão Ambiental</strong>.
+            Transformamos desafios complexos em soluções ágeis e engajadoras.
+          </p>
         </div>
-      </div>
+      </header>
 
-      {/* Messages Container */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "20px 0", backgroundColor: "#ffffff" }}>
-        {messages.length === 0 ? (
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100%",
-            flexDirection: "column",
-            textAlign: "center",
-            padding: "20px"
-          }}>
-            <div style={{ fontSize: "48px", marginBottom: "16px" }}>💬</div>
-            <h2 style={{ fontSize: "28px", fontWeight: "600", color: "#2d5016", marginBottom: "8px" }}>
-              Bem-vindo ao Assistente Floema
-            </h2>
-            <p style={{ fontSize: "16px", color: "#4a7c2e", marginBottom: "32px" }}>
-              Faça uma pergunta sobre as soluções da Floema em fertilizantes e nutrição vegetal
-            </p>
+      {/* Main Content */}
+      <main style={{ maxWidth: "1200px", margin: "-40px auto 60px", padding: "0 20px" }}>
 
-            {/* Perguntas Sugeridas */}
-            <div style={{
+        {/* Hub de Links - Central de Acessos */}
+        <section
+          style={{
+            background: "rgba(255, 255, 255, 0.8)",
+            backdropFilter: "blur(12px)",
+            borderRadius: "24px",
+            padding: "40px",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.05)",
+            marginBottom: "40px",
+            border: "1px solid rgba(255,255,255,0.4)"
+          }}
+        >
+          <h2 style={{ fontSize: "32px", color: "#04004f", textAlign: "center", marginBottom: "32px", fontWeight: "700" }}>
+            Central de Acessos
+          </h2>
+          <div
+            style={{
               display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "12px",
-              maxWidth: "500px",
-              marginBottom: "32px"
-            }}>
-              {[
-                "O que é a Floema e qual seu propósito na agricultura?",
-                "Quais são as principais linhas de fertilizantes da Floema?",
-                "Como os fertilizantes foliares da Floema melhoram a produtividade?",
-                "Quais soluções orgânicas e minerais a Floema oferece?",
-                "Como entrar em contato com a equipe da Floema para assistência técnica?"
-              ].map((pergunta, i) => (
-                <button
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "20px",
+            }}
+          >
+            {links.map((link, idx) => (
+              <a
+                key={idx}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  padding: "24px",
+                  borderRadius: "16px",
+                  backgroundColor: link.color,
+                  color: "white",
+                  textDecoration: "none",
+                  transition: "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s",
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+                  position: "relative",
+                  overflow: "hidden"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.boxShadow = "0 15px 30px rgba(0,0,0,0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.1)";
+                }}
+              >
+                <h3 style={{ fontSize: "20px", fontWeight: "700", marginBottom: "8px" }}>{link.title}</h3>
+                <p style={{ fontSize: "14px", opacity: 0.9, lineHeight: "1.4" }}>{link.desc}</p>
+                <div style={{
+                  position: "absolute",
+                  right: "-10px",
+                  bottom: "-10px",
+                  opacity: 0.1,
+                  fontSize: "80px"
+                }}>
+                  ↗
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Cursos & Apps and Consultoria Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "40px" }}>
+
+          {/* Cursos e Jogos Educacionais */}
+          <section
+            style={{
+              backgroundColor: "white",
+              padding: "40px",
+              borderRadius: "24px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.03)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <span style={{ fontSize: "32px" }}>🎮</span>
+              <h2 style={{ fontSize: "28px", color: "#27753f", fontWeight: "700", margin: 0 }}>Cursos & Apps</h2>
+            </div>
+            <p style={{ color: "#64748b", marginBottom: "24px", lineHeight: "1.6" }}>
+              Modernize o aprendizado com gamificação de elite. Conheça nossos simuladores e quizzes que engajam e mensuram a evolução do aluno baseado na BNCC.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {apps.map((app, i) => (
+                <a
                   key={i}
-                  onClick={() => {
-                    setQuestion(pergunta);
-                    setTimeout(() => {
-                      const form = document.querySelector("form");
-                      if (form) form.dispatchEvent(new Event("submit", { bubbles: true }));
-                    }, 100);
-                  }}
+                  href={app.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    padding: "12px 16px",
+                    padding: "16px 20px",
                     backgroundColor: "#f0f7e8",
-                    border: "1px solid #d4e4d4",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    color: "#2d5016",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                    textAlign: "left",
-                    fontFamily: "inherit"
+                    color: "#27753f",
+                    borderRadius: "12px",
+                    textDecoration: "none",
+                    fontWeight: "600",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    transition: "background-color 0.2s"
                   }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#e8f5d9";
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#4a7c2e";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#f0f7e8";
-                    (e.currentTarget as HTMLButtonElement).style.borderColor = "#d4e4d4";
-                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#e8f5d9"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f7e8"}
                 >
-                  {pergunta}
-                </button>
+                  {app.name}
+                  <span>➔</span>
+                </a>
               ))}
             </div>
+          </section>
 
-            {/* Features */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-              gap: "12px",
-              maxWidth: "600px"
-            }}>
-              <div style={{
-                padding: "12px 16px",
-                backgroundColor: "#f0f7e8",
-                borderRadius: "8px",
-                fontSize: "13px",
-                color: "#2d5016",
-                fontWeight: "500"
-              }}>
-                📚 Busca em documentos
+          {/* Engenharia e Consultoria */}
+          <section
+            style={{
+              backgroundColor: "white",
+              padding: "40px",
+              borderRadius: "24px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.03)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <span style={{ fontSize: "32px" }}>🍃</span>
+              <h2 style={{ fontSize: "28px", color: "#04004f", fontWeight: "700", margin: 0 }}>Consultoria</h2>
+            </div>
+            <p style={{ color: "#64748b", marginBottom: "24px", lineHeight: "1.6" }}>
+              A Cerrado Engenharia e Consultoria Ambiental entrega soluções inteligentes de engenharia civil e gestão ambiental.
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              <div style={{ padding: "20px", border: "1px solid #e2e8f0", borderRadius: "16px" }}>
+                <h3 style={{ fontSize: "18px", color: "#04004f", marginBottom: "8px", fontWeight: "700" }}>Engenharia e Construção</h3>
+                <p style={{ fontSize: "14px", color: "#64748b", margin: 0 }}>
+                  Com Letícia Carvalho Valério. Planejamento, gerenciamento de obras civis e industriais com foco em otimização de custos e prazos.
+                </p>
               </div>
-              <div style={{
-                padding: "12px 16px",
-                backgroundColor: "#f0f7e8",
-                borderRadius: "8px",
-                fontSize: "13px",
-                color: "#2d5016",
-                fontWeight: "500"
-              }}>
-                ⚡ Respostas rápidas
-              </div>
-              <div style={{
-                padding: "12px 16px",
-                backgroundColor: "#f0f7e8",
-                borderRadius: "8px",
-                fontSize: "13px",
-                color: "#2d5016",
-                fontWeight: "500"
-              }}>
-                📍 Cita fontes
-              </div>
-              <div style={{
-                padding: "12px 16px",
-                backgroundColor: "#f0f7e8",
-                borderRadius: "8px",
-                fontSize: "13px",
-                color: "#2d5016",
-                fontWeight: "500"
-              }}>
-                🤖 IA avançada
+
+              <div style={{ padding: "20px", border: "1px solid #e2e8f0", borderRadius: "16px" }}>
+                <h3 style={{ fontSize: "18px", color: "#04004f", marginBottom: "8px", fontWeight: "700" }}>Gestão Ambiental</h3>
+                <p style={{ fontSize: "14px", color: "#64748b", margin: 0 }}>
+                  Com Rodrigo Machado. Licenciamento, georreferenciamento, inventários florestais e operação de drones para alta precisão.
+                </p>
               </div>
             </div>
-          </div>
-        ) : (
-          <div style={{ maxWidth: "900px", margin: "0 auto", paddingLeft: "20px", paddingRight: "20px" }}>
-            {messages.map((msg, i) => (
-              <div key={i} style={{
-                marginBottom: "12px",
-                display: "flex",
-                justifyContent: msg.type === "user" ? "flex-end" : "flex-start",
-                paddingLeft: "20px",
-                paddingRight: "20px"
-              }}>
-                <div style={{
-                  maxWidth: "600px",
-                  padding: "12px 16px",
-                  borderRadius: "12px",
-                  backgroundColor: msg.type === "user" ? "#4a7c2e" : "#f0f7e8",
-                  color: msg.type === "user" ? "#ffffff" : "#2d5016",
-                  fontSize: "15px",
-                  lineHeight: "1.5",
-                  whiteSpace: "pre-wrap",
-                  wordWrap: "break-word"
-                }}>
-                  {msg.content}
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingLeft: "20px",
-                paddingRight: "20px",
-                marginTop: "12px"
-              }}>
-                <div style={{
-                  padding: "12px 16px",
-                  borderRadius: "12px",
-                  backgroundColor: "#f7f7f7",
-                  color: "#000000"
-                }}>
-                  <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                    <div style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      backgroundColor: "#999999",
-                      animation: "bounce 1.4s infinite"
-                    }}></div>
-                    <div style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      backgroundColor: "#999999",
-                      animation: "bounce 1.4s infinite",
-                      animationDelay: "0.2s"
-                    }}></div>
-                    <div style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      backgroundColor: "#999999",
-                      animation: "bounce 1.4s infinite",
-                      animationDelay: "0.4s"
-                    }}></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-      </div>
+          </section>
 
-      {/* Input Area */}
-      <div style={{
-        borderTop: "1px solid #d4e4d4",
-        padding: "16px 20px",
-        backgroundColor: "#ffffff"
-      }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-          <form onSubmit={handleSubmit} style={{ display: "flex", gap: "12px" }}>
-            <input
-              type="text"
-              value={question}
-              onChange={e => setQuestion(e.target.value)}
-              placeholder="Faça sua pergunta..."
-              disabled={loading}
-              style={{
-                flex: 1,
-                padding: "12px 16px",
-                border: "1px solid #d4e4d4",
-                borderRadius: "8px",
-                fontSize: "15px",
-                outline: "none",
-                backgroundColor: loading ? "#f0f7e8" : "#ffffff",
-                color: "#2d5016"
-              }}
-            />
-            <button
-              type="submit"
-              disabled={loading || !question.trim()}
-              style={{
-                padding: "12px 24px",
-                backgroundColor: loading || !question.trim() ? "#cccccc" : "#4a7c2e",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "15px",
-                fontWeight: "600",
-                cursor: loading || !question.trim() ? "not-allowed" : "pointer",
-                transition: "background-color 0.2s"
-              }}
-              onMouseEnter={e => {
-                if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#3d6324";
-                }
-              }}
-              onMouseLeave={e => {
-                if (!loading && question.trim()) {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#4a7c2e";
-                }
-              }}
-            >
-              Enviar
-            </button>
-          </form>
-
-          {/* Settings Textarea */}
-          <div style={{ marginTop: "12px" }}>
-            <label style={{
-              display: "block",
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "#4a7c2e",
-              marginBottom: "6px",
-              textTransform: "uppercase"
-            }}>
-              URLs dos documentos (opcional - deixe vazio para usar padrão)
-            </label>
-            <textarea
-              value={urls}
-              onChange={e => setUrls(e.target.value)}
-              placeholder="Cole URLs aqui, uma por linha"
-              style={{
-                width: "100%",
-                padding: "12px 16px",
-                border: "1px solid #d4e4d4",
-                borderRadius: "8px",
-                fontSize: "13px",
-                fontFamily: "monospace",
-                minHeight: "60px",
-                resize: "vertical",
-                outline: "none",
-                color: "#2d5016",
-                backgroundColor: "#ffffff"
-              }}
-            />
-          </div>
         </div>
-      </div>
+      </main>
 
-      <style>{`
-        @keyframes bounce {
-          0%, 80%, 100% { opacity: 0.3; }
-          40% { opacity: 1; }
-        }
-        * {
-          box-sizing: border-box;
-        }
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-        input:focus, textarea:focus {
-          border-color: #4a7c2e !important;
-          box-shadow: 0 0 0 3px rgba(74, 124, 46, 0.1);
-        }
-      `}</style>
+      {/* Footer */}
+      <footer style={{ textAlign: "center", padding: "40px 20px", color: "#64748b", borderTop: "1px solid #e2e8f0" }}>
+        <p>© 2026 CerradoHub. Todos os direitos reservados.</p>
+        <p style={{ fontSize: "14px", marginTop: "8px" }}>Converse com o Lucas no canto inferior direito para saber mais!</p>
+      </footer>
+
+      {/* Embedded Lucas Chatbot */}
+      <LucasChatbot />
     </div>
   );
 }
