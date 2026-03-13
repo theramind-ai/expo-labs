@@ -11,9 +11,9 @@ const DOCUMENTS_DIR = path.join(process.cwd(), "public", "documents");
 
 // URLs de páginas web para complementar o RAG (opcional)
 const WEB_URLS = [
-  "https://www.gruposetta.com/",
-  "https://www.gruposetta.com/servicos",
-  "https://www.gruposetta.com/digital-labs"
+  "https://cerradocursos.com/",
+  "https://cerradoeng.com/",
+  "https://rodrigo-machado.com/"
 ];
 
 // Função para extrair texto de PDF local
@@ -161,8 +161,7 @@ export async function POST(req: NextRequest) {
     }
     */
 
-    // 3. Opcionalmente processar URLs web padrão (DESATIVADO - Apenas URLs enviadas)
-    /*
+    // 3. Processar URLs web padrão (CerradoHub)
     if (includeWebUrls) {
       for (const url of WEB_URLS) {
         try {
@@ -174,7 +173,6 @@ export async function POST(req: NextRequest) {
         }
       }
     }
-    */
 
     if (allChunks.length === 0) {
       return NextResponse.json({
@@ -196,7 +194,7 @@ export async function POST(req: NextRequest) {
     const context = relevant.map((chunk, i) => `Trecho ${i + 1}: ${chunk}`).join("\n\n");
 
     // Monta prompt
-    const prompt = `Você é um assistente RAG especializado no Grupo Setta. Sua função é responder perguntas sobre engenharia elétrica, automação industrial, subestações, eletrocentros e as soluções inovadoras da Digital Labs do grupo. Responda de forma profissional, clara e objetiva com base nos trechos fornecidos.\n\nPergunta: ${question}\n\nTrechos dos documentos:\n${context}\n\nResposta:`;
+    const prompt = `Você é o Lucas, um assistente RAG especializado no CerradoHub (Cerrado Cursos e Cerrado Engenharia e Consultoria Ambiental). Sua função é responder perguntas sobre educação gamificada, gestão ambiental, licenciamentos, cursos, projetos técnicos, e as informações das páginas e sub-páginas do Cerrado. Responda de forma profissional, clara e objetiva com base nos trechos fornecidos. Lembre-se que você se chama Lucas.\n\nPergunta: ${question}\n\nTrechos dos documentos:\n${context}\n\nResposta:`;
 
     let answer = "";
 
